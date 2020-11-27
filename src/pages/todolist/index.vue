@@ -108,7 +108,7 @@
     </view>
 </template>
 <script>
-import { createApp, reactive, computed, toRefs, watch } from 'vue'
+import { createApp, reactive, computed, toRefs, ref } from 'vue'
 import Taro from '@tarojs/taro'
 import './todolist.scss'
 import TodoItem from './todo-item.vue'
@@ -175,14 +175,13 @@ export default {
             if (!value) {
                 return
             }
-            state.newTodo = ''
             state.todos.push({
                 id: todoStorage.uid++,
                 title: value,
                 completed: false,
             })
+            state.newTodo = ''
             console.log('state.todos', state.todos)
-            console.log('state.newTodo', state.newTodo)
         }
         // 删除
         function removeTodo(todo) {
@@ -211,7 +210,7 @@ export default {
         }
         // 移除已完成的任务
         function removeCompleted() {
-            state.todos = filter.active(state.todos)
+            state.todos = filters.active(state.todos)
         }
 
         const filteredTodos = computed(() => {
